@@ -129,10 +129,12 @@
   <ItemGroup>
     <ClCompile Include="blablah.cpp" />
     <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Random_number_generator.cpp" />
     <ClCompile Include="Simulator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="Random_number_generator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

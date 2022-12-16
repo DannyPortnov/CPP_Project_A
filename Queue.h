@@ -1,8 +1,8 @@
 #ifndef _QUEUE_H_
 #define _QUEUE_H_
 
-#define max_range 69
-#define min_range 50
+#define MIN_SERVICE_TIME 50
+#define MAX_SERVICE_TIME 69
 
 #define   _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -23,10 +23,11 @@ using namespace std;
 class Queue {
 friend int random(int min, int max);
 private:
+	static random_device m_randomdevice;     // Only used once to initialise (seed) engine
+	static mt19937 m_mt;    // Random-number engine used (Mersenne-Twister in this case)
 	char* m_queue;	//queue array pointer
 	char* m_head;
 	char* m_tail;
-	const int capacity = random(min_range, max_range);
 	const int service_time;
 	const int m_capacity;
 	static unsigned queue_number;
