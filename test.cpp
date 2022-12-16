@@ -1,5 +1,5 @@
 #include "Queue.h"
-
+#include "Simulator.h"
 
 
 void test1() { //works
@@ -42,10 +42,16 @@ void print_queue(Queue q) { //move inside the class after niv finishes with fron
 	//}
 }
 
+
+
 int main() {
 
 	test1();
 	test2();
+	string s = "q10_R1_19";
+	int queues_num = extract_queues_number(s);
+	int capacity = extract_queues_capacity(s);
+	cout << "queues num: " << queues_num << " capacity of queue is: " << capacity << endl;
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;

@@ -6,14 +6,14 @@ mt19937 Queue::m_gen((random_device())()); // Only used once to initialize Rando
 
 
 Queue::Queue(int capacity) 
-	: m_service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
+	: m_service_time(random_func(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
 	,m_capacity(capacity)		//Constructor
 {
 	initialize_queue();
 }
 
 Queue::Queue(const Queue& d) 
-	: m_service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
+	: m_service_time(random_func(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
 	, m_capacity(d.m_capacity)
 {
 	initialize_queue();
@@ -94,7 +94,7 @@ int Queue::size() {
 }
 
 // random number initiallization function
-int random(int min, int max) { //consider moving this another class later
+int random_func(int min, int max) { //consider moving this another class later
 	uniform_int_distribution<int> distr(min, max); // Guaranteed unbiased
 	int rand_num = distr(Queue::m_gen);
 	return rand_num;

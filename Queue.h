@@ -8,6 +8,7 @@
 #include <crtdbg.h>
 #include <iostream>
 #include <stdbool.h>
+#include <string>
 #include <random>
 using namespace std;
 
@@ -21,7 +22,7 @@ using namespace std;
 
 
 class Queue {
-friend int random(int min, int max);
+friend int random_func(int min, int max);
 private:
 	//static random_device m_randomdevice;     // Only used once to initialise (seed) engine
 	static mt19937 m_gen;    // Random-number engine used (Mersenne-Twister in this case)
@@ -86,7 +87,8 @@ public:
 };
 
 
-int random(int min, int max);
+int random_func(int min, int max);
+
 
 //ostream& operator<<(ostream& os, const Safe_Array& arr);
 //bool operator==(const Safe_Array& a, const Safe_Array& b); //returns true if the arrays are identical, otherwise false.
