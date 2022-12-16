@@ -22,7 +22,7 @@ private:
 	char* m_tail;
 	static unsigned queue_number;
 public:
-	Queue(unsigned capacity = 0, const unsigned max_tries = 0);
+	Queue(char* m_queue, char* m_head, char* m_tail);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
 
