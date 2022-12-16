@@ -2,6 +2,8 @@
 
 
 unsigned Queue::queue_number = 1;
+mt19937 Queue::m_gen((random_device())()); // Only used once to initialize Random-number (seed) engine (Mersenne-Twister in this case)
+
 
 Queue::Queue(int capacity) 
 	: service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
@@ -62,7 +64,7 @@ bool Queue::is_queue_full() {
 // random number initiallization function
 int random(int min, int max) { //consider moving this another class later
 	uniform_int_distribution<int> distr(min, max); // Guaranteed unbiased
-	int rand_num = distr(Queue::m_mt);
+	int rand_num = distr(Queue::m_gen);
 	return rand_num;
 }
 

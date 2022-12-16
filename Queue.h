@@ -24,7 +24,7 @@ class Queue {
 friend int random(int min, int max);
 private:
 	//static random_device m_randomdevice;     // Only used once to initialise (seed) engine
-	static mt19937 m_mt;    // Random-number engine used (Mersenne-Twister in this case)
+	static mt19937 m_gen;    // Random-number engine used (Mersenne-Twister in this case)
 	char* m_queue;	//queue array pointer
 	char* m_head;
 	char* m_tail;
