@@ -3,18 +3,19 @@
 
 #include "Queue.h"
 
-class Simulator {
-friend int random_func(int min, int max);
-friend int extract_queues_number(string q_structure);
-friend int extract_queues_capacity(string q_structure);
-
-const enum algorithm
+enum algorithm
 {
 	shortest,	// by default == 0
 	longest,	// by default == 1
 	fastest,	// by default == 2
 	random		// by default == 3
 };
+
+class Simulator {
+friend int random_func(int min, int max);
+friend int extract_queues_number(string q_structure);
+friend int extract_queues_capacity(string q_structure);
+
 
 private:
 	//const int m_q_capacity;
