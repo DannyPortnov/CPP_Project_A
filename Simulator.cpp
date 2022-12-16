@@ -3,9 +3,15 @@
 
 Simulator::Simulator(string queue_structure, int interval, algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)), 
+	m_q_capacity(extract_queues_capacity(queue_structure)),
 	m_interval(random_func(1,10)),
 	m_algorithm(algo)
 {
+	m_simulator = new Queue[m_num_of_queues];
+	Queue temp(m_q_capacity);
+	for (int i = 0; i < m_num_of_queues; i++) {
+		//m_simulator[i](&temp);
+	}
 
 }
 
@@ -64,7 +70,7 @@ int extract_queues_capacity(string q_structure) {
 		}
 	}
 	if (is_random)
-		queue_capacity = random(rand_min, rand_max);
+		queue_capacity = random_func(rand_min, rand_max);
 	return queue_capacity;
 }
 

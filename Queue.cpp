@@ -18,8 +18,12 @@ Queue::Queue(const Queue& d)
 {
 	initialize_queue();
 }
-
-//Queue::Queue() { //default ctor
+//
+//Queue::Queue() 
+//	: m_service_time(random_func(MIN_SERVICE_TIME, MAX_SERVICE_TIME)),
+//
+//{ //default ctor
+//
 //}
 
 Queue& Queue::initialize_queue() {

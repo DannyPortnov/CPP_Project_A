@@ -18,11 +18,11 @@ friend int extract_queues_capacity(string q_structure);
 
 
 private:
-	//const int m_q_capacity;
+	const int m_q_capacity;
 	const int m_num_of_queues; // number of queues in simulation
 	const int m_interval;
 	const algorithm m_algorithm;
-	
+	Queue* m_simulator;		// simulator is an array of queue
 	//void extract_queues_capacity(string q_structure);
 	int m_start_simulation = 0;
 
@@ -33,21 +33,11 @@ public:
 
 
 
-	///*Queue(char* m_queue, char* m_head, char* m_tail);*/
-	//Queue(int capacity);
-	//Queue(const Queue&);
-	//~Queue();		// deconstructor
-	//void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
-	//void pop();
-	//bool is_queue_full();
-	//bool is_queue_empty();
-	//const char front();
-	//int size();
-
 };
 
-int extract_queues_number(string q_structure);
-int extract_queues_capacity(string q_structure);
+
+//int extract_queues_number(string q_structure);
+//int extract_queues_capacity(string q_structure);
 
 
 #endif		// _SIMULATOR_H_

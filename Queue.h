@@ -38,6 +38,7 @@ private:
 
 public:
 	/*Queue(char* m_queue, char* m_head, char* m_tail);*/
+	Queue();
 	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
@@ -88,7 +89,8 @@ public:
 
 
 int random_func(int min, int max);
-
+int extract_queues_number(string q_structure);
+int extract_queues_capacity(string q_structure);
 
 //ostream& operator<<(ostream& os, const Safe_Array& arr);
 //bool operator==(const Safe_Array& a, const Safe_Array& b); //returns true if the arrays are identical, otherwise false.
