@@ -1,10 +1,14 @@
 #ifndef _QUEUE_H_
 #define _QUEUE_H_
 
+#define max_range 69
+#define min_range 50
+
 #define   _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 #include <iostream>
 #include <stdbool.h>
+#include <random>
 using namespace std;
 
 #ifdef _DEBUG
@@ -14,18 +18,23 @@ using namespace std;
 #endif
 #endif  // _DEBUG
 
-class Queue {
 
+
+class Queue {
+friend int random(int min, int max);
 private:
 	char* m_queue;	//queue array pointer
 	char* m_head;
 	char* m_tail;
+	const int capacity = random(min_range, max_range);
 	static unsigned queue_number;
+
+
 public:
 	Queue(char* m_queue, char* m_head, char* m_tail);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
-
+	void push(char* new_client);
 
 
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);
@@ -64,6 +73,8 @@ public:
 //	Safe_Array sub(int index1, int index2);
 };
 
+
+int random(int min, int max);
 
 //ostream& operator<<(ostream& os, const Safe_Array& arr);
 //bool operator==(const Safe_Array& a, const Safe_Array& b); //returns true if the arrays are identical, otherwise false.
