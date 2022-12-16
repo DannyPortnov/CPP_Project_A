@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Random_number_generator.h" />
+    <ClInclude Include="Simulator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

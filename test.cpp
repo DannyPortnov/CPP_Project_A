@@ -16,17 +16,24 @@ void test1() { //works
 
 
 void test2() {
+	int size_check;
 	Queue queue1(10);
 	for (char i = 'a'; i < 'e'; i++)
 	{
 		queue1.push(i); //push a to d
 	}
+	cout << "front is: " << queue1.front() << endl;
+	cout << "queue 1 after push a to d: " << queue1.size() << endl;
 	queue1.pop();//pop a
 	queue1.pop();//pop b
+	cout << "front is: " << queue1.front() << endl;
+	cout << "queue 1 after pop a, b: " << queue1.size() << endl;
 	for (char i = 'e'; i < 'l'; i++)
 	{
 		queue1.push(i); //push e to k
 	}
+	cout << "front is: " << queue1.front() << endl;
+	cout << "queue 1 after push e to k: " << queue1.size() << endl;
 }
 
 void print_queue(Queue q) { //move inside the class after niv finishes with front()
@@ -36,6 +43,7 @@ void print_queue(Queue q) { //move inside the class after niv finishes with fron
 }
 
 int main() {
+
 	test1();
 	test2();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;

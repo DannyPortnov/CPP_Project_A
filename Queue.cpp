@@ -26,13 +26,11 @@ Queue& Queue::initialize_queue() {
 	m_queue = new char[m_capacity];
 	m_tail = &m_queue[0];
 	m_head = nullptr;
-	/*queue_number += sizeof(Queue) + m_capacity * sizeof(char);*/
 	queue_number++;
 	return *this;
 }
 
 Queue::~Queue() {
-	/*queue_number-= sizeof(Queue) + m_capacity * sizeof(char);*/
 	queue_number--;
 	delete[] m_queue;
 }
@@ -41,6 +39,7 @@ void Queue::push(char new_client) {
 	if (!is_queue_full()) {
 		*m_tail = new_client;
 		increment_pointer(m_tail);
+		m_variables_count++;
 	}
 	else {
 		cout << "queue is full, unable to push another client" << endl;
@@ -59,6 +58,7 @@ void Queue::increment_pointer(char*& pointer) {
 		pointer++;
 	}
 }
+
 void Queue::pop() {
 	if (is_queue_empty()) {
 		cout << "queue is empty, unable to pop client" << endl;
@@ -69,6 +69,7 @@ void Queue::pop() {
 	if (m_tail == m_head) {
 		m_head = nullptr;
 	}
+	m_variables_count--;
 }
 
 bool Queue::is_queue_full() {
@@ -89,7 +90,7 @@ const char Queue::front() {
 
 // function that returns the number of variables in queue
 int Queue::size() {
-
+	return m_variables_count;
 }
 
 // random number initiallization function
@@ -99,17 +100,6 @@ int random(int min, int max) { //consider moving this another class later
 	return rand_num;
 }
 
-
-
-//auto random_integer = distr(rng);
-//
-//std::random_device rd; // obtain a random number from hardware
-//std::mt19937 gen(rd()); // seed the generator
-//std::uniform_int_distribution<> distr(25, 63); // define the range
-
-//for (int n = 0; n < 40; ++n)
-//	std::cout << distr(gen) << ' '; // generate numbers
-//
 
 
 

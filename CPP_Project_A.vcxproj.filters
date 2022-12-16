@@ -35,5 +35,8 @@
     <ClInclude Include="Random_number_generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Simulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

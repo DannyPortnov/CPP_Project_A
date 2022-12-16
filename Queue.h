@@ -33,10 +33,8 @@ private:
 	unsigned m_variables_count = 0; // number of variables in queue
 	static unsigned queue_number; // number of class instances
 	Queue& initialize_queue();
-	bool is_queue_full();
-	bool is_queue_empty();
-
 	void increment_pointer(char*& pointer); //ref to pointer
+
 public:
 	/*Queue(char* m_queue, char* m_head, char* m_tail);*/
 	Queue(int capacity);
@@ -44,7 +42,8 @@ public:
 	~Queue();		// deconstructor
 	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
 	void pop();
-
+	bool is_queue_full();
+	bool is_queue_empty();
 	const char front();
 	int size();
 
