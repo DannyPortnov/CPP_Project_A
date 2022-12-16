@@ -28,10 +28,10 @@ private:
 	char* m_queue;	//queue array pointer
 	char* m_head;
 	char* m_tail;
-	const int service_time;
-	const int m_capacity;
-	static unsigned queue_number;
-
+	const int m_service_time;
+	const int m_capacity;	// the queue's capacity 
+	unsigned m_variables_count = 0; // number of variables in queue
+	static unsigned queue_number; // number of class instances
 	Queue& initialize_queue();
 	bool is_queue_full();
 public:
@@ -40,6 +40,10 @@ public:
 	Queue(const Queue&);
 	~Queue();		// deconstructor
 	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
+
+	const char front();
+	int size();
+
 
 
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);

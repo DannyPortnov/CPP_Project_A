@@ -6,14 +6,14 @@ mt19937 Queue::m_gen((random_device())()); // Only used once to initialize Rando
 
 
 Queue::Queue(int capacity) 
-	: service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
+	: m_service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
 	,m_capacity(capacity)		//Constructor
 {
 	initialize_queue();
 }
 
 Queue::Queue(const Queue& d) 
-	: service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
+	: m_service_time(random(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
 	, m_capacity(d.m_capacity)
 {
 	initialize_queue();
@@ -59,6 +59,19 @@ void Queue::push(char new_client) {
 
 bool Queue::is_queue_full() {
 	return m_tail == m_head;
+}
+
+
+// function that returns the first variable in queue.
+const char Queue::front() {
+	if (m_head != nullptr)
+		return *m_head;
+	cout << "The Queue Is Empty!" << endl;
+}
+
+// function that returns the number of variables in queue
+int Queue::size() {
+
 }
 
 // random number initiallization function
