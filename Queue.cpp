@@ -38,26 +38,46 @@ Queue::~Queue() {
 void Queue::push(char new_client) {
 	if (!is_queue_full()) {
 		*m_tail = new_client;
-		if (m_tail == &m_queue[m_capacity - 1]) {
-			m_tail = &m_queue[0];
-		}
-		else {
-			m_tail++;
-		}
+		increment_pointer(m_tail);
 	}
 	else {
 		cout << "queue is full, unable to push another client" << endl;
 		return;
 	}
-	if (m_head == nullptr) {
+	if (is_queue_empty()) {
 		m_head = &m_queue[0];
 	}
-	
+}
+
+void Queue::increment_pointer(char*& pointer) {
+	if (pointer == &m_queue[m_capacity - 1]) {
+		pointer = &m_queue[0];
+	}
+	else {
+		pointer++;
+	}
+}
+void Queue::pop() {
+	if (is_queue_empty()) {
+		cout << "queue is empty, unable to pop client" << endl;
+		return;
+	}
+	*m_head = NULL; //remove client
+	increment_pointer(m_head);
+	if (m_tail == m_head) {
+		m_head = nullptr;
+	}
 }
 
 bool Queue::is_queue_full() {
 	return m_tail == m_head;
 }
+
+bool Queue::is_queue_empty() {
+	return m_head == nullptr;
+}
+
+
 
 // random number initiallization function
 int random(int min, int max) { //consider moving this another class later

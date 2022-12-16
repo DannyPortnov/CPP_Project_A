@@ -34,12 +34,16 @@ private:
 
 	Queue& initialize_queue();
 	bool is_queue_full();
+	bool is_queue_empty();
+
+	void increment_pointer(char*& pointer); //ref to pointer
 public:
 	/*Queue(char* m_queue, char* m_head, char* m_tail);*/
 	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
 	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
+	void pop();
 
 
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);
