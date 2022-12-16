@@ -1,7 +1,6 @@
 #include "Queue.h"
 
 
-
 unsigned Queue::queue_number = 1;
 
 Queue::Queue(int capacity) 
@@ -25,13 +24,39 @@ Queue& Queue::initialize_queue() {
 	m_queue = new char[m_capacity];
 	m_tail = &m_queue[0];
 	m_head = nullptr;
-	queue_number += sizeof(Queue) + m_capacity * sizeof(char);
+	/*queue_number += sizeof(Queue) + m_capacity * sizeof(char);*/
+	queue_number++;
 	return *this;
 }
 
 Queue::~Queue() {
-	queue_number-= sizeof(Queue) + m_capacity * sizeof(char);
+	/*queue_number-= sizeof(Queue) + m_capacity * sizeof(char);*/
+	queue_number--;
 	delete[] m_queue;
+}
+
+void Queue::push(char new_client) {
+	if (!is_queue_full()) {
+		*m_tail = new_client;
+		if (m_tail == &m_queue[m_capacity - 1]) {
+			m_tail = &m_queue[0];
+		}
+		else {
+			m_tail++;
+		}
+	}
+	else {
+		cout << "queue is full, unable to push another client" << endl;
+		return;
+	}
+	if (m_head == nullptr) {
+		m_head = &m_queue[0];
+	}
+	
+}
+
+bool Queue::is_queue_full() {
+	return m_tail == m_head;
 }
 
 // random number initiallization function
@@ -40,6 +65,8 @@ int random(int min, int max) { //consider moving this another class later
 	int rand_num = distr(Queue::m_mt);
 	return rand_num;
 }
+
+
 
 //auto random_integer = distr(rng);
 //
@@ -52,11 +79,7 @@ int random(int min, int max) { //consider moving this another class later
 //
 
 
-void Queue::push(char* new_client) {
 
-
-
-}
 
 
 

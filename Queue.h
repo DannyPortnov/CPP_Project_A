@@ -23,7 +23,7 @@ using namespace std;
 class Queue {
 friend int random(int min, int max);
 private:
-	static random_device m_randomdevice;     // Only used once to initialise (seed) engine
+	//static random_device m_randomdevice;     // Only used once to initialise (seed) engine
 	static mt19937 m_mt;    // Random-number engine used (Mersenne-Twister in this case)
 	char* m_queue;	//queue array pointer
 	char* m_head;
@@ -33,12 +33,13 @@ private:
 	static unsigned queue_number;
 
 	Queue& initialize_queue();
+	bool is_queue_full();
 public:
 	/*Queue(char* m_queue, char* m_head, char* m_tail);*/
 	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
-	void push(char* new_client);
+	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
 
 
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);
@@ -86,4 +87,4 @@ int random(int min, int max);
 //int max(int a, int b);
 //int abs(int a, int b);
 
-#endif		// _SAFEARRAY_H_
+#endif		// _QUEUE_H_

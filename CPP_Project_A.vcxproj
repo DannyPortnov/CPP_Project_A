@@ -131,6 +131,7 @@
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Random_number_generator.cpp" />
     <ClCompile Include="Simulator.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Queue.h" />
