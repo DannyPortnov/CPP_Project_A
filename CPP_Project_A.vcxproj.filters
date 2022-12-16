@@ -24,9 +24,6 @@
     <ClCompile Include="blablah.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Random_number_generator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

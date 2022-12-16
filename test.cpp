@@ -1,6 +1,6 @@
 #include "Queue.h"
 
-mt19937 Queue::m_mt((random_device())());
+
 
 void test1() { //works
 	Queue queue1(3);
