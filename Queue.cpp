@@ -1,37 +1,45 @@
 #include "Queue.h"
 
-Queue::Queue(char d, char m, int y) //Constructor
+#define MIN_SERVICE_TIME 50
+#define MAX_SERVICE_TIME 69
+
+unsigned Queue::queue_number = 1;
+
+Queue::Queue(int capacity) 
+	: service_time(MIN_SERVICE_TIME * (rand() % (MAX_SERVICE_TIME - MIN_SERVICE_TIME)))
+	,m_capacity(capacity)		//Constructor
 {
-	init(d, m, y);
+	initialize_queue();
 }
 
-Queue::Queue(unsigned long n) {
-	set_day_month_year(n);
-	leap_year = is_leap_year(m_year);
+
+Queue::Queue(const Queue& d) 
+	: service_time(MIN_SERVICE_TIME* (rand() % (MAX_SERVICE_TIME - MIN_SERVICE_TIME)))
+	, m_capacity(d.m_capacity)
+{
+	initialize_queue();
 }
 
-Queue::Queue(const Queue& d) {
-	init(d.m_day, d.m_month, d.m_year);
-}
+//Queue::Queue() { //default ctor
+//}
 
-Queue::Queue() {
-	tm newtime;
-	time_t now = time(0);
-	localtime_s(&newtime, &now);
-	init(newtime.tm_mday, newtime.tm_mon + 1, newtime.tm_year + 1900);
-}
-
-Queue& Queue::init(char d, char m, int y) {
-	m_day = d; m_month = m; m_year = y;
-	set_day_number(m_day, m_month, m_year);
-	leap_year = is_leap_year(m_year);
+Queue& Queue::initialize_queue() {
+	m_queue = new char[m_capacity];
+	m_tail = &m_queue[0];
+	m_head = nullptr;
+	queue_number += sizeof(Queue) + m_capacity * sizeof(char);
 	return *this;
 }
 
-void Queue::show(void) const
-{
-	cout << (int)m_day << "/" << (int)m_month << "/" << m_year << endl;
+Queue::~Queue() {
+	queue_number-= sizeof(Queue) + m_capacity * sizeof(char);
+	delete[] m_queue;
 }
+
+//void Queue::show(void) const
+//{
+//	cout << (int)m_day << "/" << (int)m_month << "/" << m_year << endl;
+//}
 //
 //unsigned Queue::get_day_number(void)const
 //{

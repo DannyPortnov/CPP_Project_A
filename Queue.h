@@ -20,9 +20,14 @@ private:
 	char* m_queue;	//queue array pointer
 	char* m_head;
 	char* m_tail;
+	const int service_time;
+	const int m_capacity;
 	static unsigned queue_number;
+
+	Queue& initialize_queue();
 public:
-	Queue(char* m_queue, char* m_head, char* m_tail);
+	/*Queue(char* m_queue, char* m_head, char* m_tail);*/
+	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
 
