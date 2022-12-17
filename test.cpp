@@ -2,11 +2,11 @@
 #include "Simulator.h"
 #include <fstream>
 
-//#define run_length 10000
-#define run_length 70
+#define run_length 10000
+#define number_of_iterations_per_sim 100
+//#define run_length 70
 
 #define results_file_name "results.csv"
-#define number_of_iterations_per_sim 10
 
 void test1() { //works
 	Queue queue1(3);
@@ -120,8 +120,7 @@ void test_bench() { //works!
 	unsigned total_max_clients = 0, total_clients_left = 0;
 	string queue_structs[] = { "q10_10" ,"q100_1","q10_R1_19" };
 
-	for (int i = 0; i < number_of_queue_structs; i++)
-	{
+	for (int i = 0; i < number_of_queue_structs; i++) {
 		algorithm_interval_gen(queue_structs[i], myfile);
 	}
 	myfile.close();

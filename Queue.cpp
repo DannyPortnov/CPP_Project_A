@@ -18,13 +18,7 @@ Queue::Queue(const Queue& d)
 {
 	initialize_queue();
 }
-//
-//Queue::Queue() 
-//	: m_service_time(random_func(MIN_SERVICE_TIME, MAX_SERVICE_TIME)),
-//
-//{ //default ctor
-//
-//}
+
 
 Queue& Queue::initialize_queue() {
 	m_queue = new char[m_capacity];

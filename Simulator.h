@@ -2,7 +2,6 @@
 #define _SIMULATOR_H_
 
 #include "Queue.h"
-#define number_of_algorithms 4
 
 enum algorithm
 {
