@@ -66,15 +66,6 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
-	case random:
-		bool q_is_full = true;
-		int random_queue;
-		while (q_is_full) {
-			random_queue = random_func(0, m_q_capacity - 1); //generate a random queue index and try routing a client to that queue
-			q_is_full = m_simulator[random_queue]->is_queue_full();
-			if (!m_simulator[random_queue]->is_queue_full())
-				queue_to_route_client->push(client);
-		}
 	case fastest: //client joins a queue with the minimum service time and that isn't full
 		int min_service_time = queue_to_route_client->get_service_time();
 		for (int i = 1; i < m_num_of_queues; i++)
@@ -111,10 +102,6 @@ bool Simulator::are_all_queues_full() {
 	}
 	return true;
 }
-
-
-
-
 
 bool Simulator::start_simulation(int run_time_length) {
 	if (m_start_simulation == run_time_length)
