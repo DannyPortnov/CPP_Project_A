@@ -26,6 +26,7 @@ private:
 	//void extract_queues_capacity(string q_structure);
 	int m_start_simulation = 0;
 	int m_clients_left = 0;
+	int m_max_clients = 0;
 public:
 	Simulator(string queue_structure, algorithm algo);
 	Simulator(int number_of_queues, int interval, algorithm algo);

@@ -63,6 +63,10 @@ void Queue::increment_pointer(char*& pointer) {
 	}
 }
 
+int Queue::get_service_time() const {
+	return m_service_time;
+}
+
 void Queue::pop() {
 	if (is_queue_empty()) {
 		cout << "queue is empty, unable to pop client" << endl;
@@ -76,11 +80,11 @@ void Queue::pop() {
 	m_variables_count--;
 }
 
-bool Queue::is_queue_full() {
+bool Queue::is_queue_full() const {
 	return m_tail == m_head;
 }
 
-bool Queue::is_queue_empty() {
+bool Queue::is_queue_empty() const {
 	return m_head == nullptr;
 }
 

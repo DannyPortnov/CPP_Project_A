@@ -1,10 +1,10 @@
 #include "Simulator.h"
 
-#define max_queue_size 19 //a queue cannot contain more than 19 clients
+//#define max_queue_size 19 //a queue cannot contain more than 19 clients
 
 // Simulator constructor
 Simulator::Simulator(string queue_structure, algorithm algo)
-	: m_num_of_queues(extract_queues_number(queue_structure)), 
+	: m_num_of_queues(extract_queues_number(queue_structure)),
 	m_interval(random_func(1,10)),
 	m_algorithm(algo)
 {
@@ -23,26 +23,24 @@ Simulator& Simulator::construct_array_cells(string queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
+		m_max_clients += m_q_capacity;
 	}
 	return *this;
 }
-Simulator::Simulator(int number_of_queues, int interval, algorithm algo) 
-	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
-{
-	/*queues_array = new Queue[number_of_queues];
-	for (int i = 0; i < number_of_queues; i++)
-	{
 
-	}*/
-}
-
+//Route a client to a queue based on the algorithm chosen.
+//If all queues are full, the method exits.
 void Simulator::routing_clients(char client) {
-
+	if (are_all_queues_full()) {
+		cout << "All queues are full, unable to add client to a queue" << endl;
+		m_clients_left++;
+		return;
+	}
+	Queue* queue_to_route_client = m_simulator[0];
 	switch (m_algorithm)
 	{
 	case shortest:
-		Queue* queue_to_route_client = nullptr;
-		int min = max_queue_size; //assume at least one queue
+		int min = queue_to_route_client->size();
 		for (int i = 1; i < m_num_of_queues; i++)
 		{
 			if (m_simulator[i]->size() < min) {
@@ -50,11 +48,32 @@ void Simulator::routing_clients(char client) {
 				min = queue_to_route_client->size();
 			}
 		}
-		queue_to_route_client->push(client);
 		break;
+	case longest:
+		int max = queue_to_route_client->size();
+		for (int i = 1; i < m_num_of_queues; i++)
+		{
+			if (m_simulator[i]->size() > max && !m_simulator[i]->is_queue_full()) {
+				queue_to_route_client = m_simulator[i];
+				max = queue_to_route_client->size();
+			}
+		}
+		break;
+	case fastest: //client joins a queue with the minimum service time and that isn't full
+		int min_service_time = queue_to_route_client->get_service_time();
+		for (int i = 1; i < m_num_of_queues; i++)
+		{
+			if (m_simulator[i]->get_service_time() < min_service_time && !m_simulator[i]->is_queue_full()) {
+				queue_to_route_client = m_simulator[i];
+				min_service_time = queue_to_route_client->get_service_time();
+			}
+		}
 	default:
+		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
+		m_clients_left++;
 		break;
 	}
+	queue_to_route_client->push(client);
 }
 //Checks whether all queues are full or not 
 bool Simulator::are_all_queues_full() {

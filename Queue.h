@@ -43,10 +43,11 @@ public:
 	~Queue();		// deconstructor
 	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
 	void pop();
-	bool is_queue_full();
-	bool is_queue_empty();
+	bool is_queue_full() const;
+	bool is_queue_empty() const;
 	const char front();
 	int size();
+	int get_service_time() const;
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);
 //	friend ostream& operator<<(ostream& os, const Safe_Array& a); //returns true if the arrays are identical, otherwise false.
 //private:
