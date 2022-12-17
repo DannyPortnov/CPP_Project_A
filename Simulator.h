@@ -27,7 +27,7 @@ private:
 	int m_start_simulation = 0;
 	int m_clients_left = 0;
 	int m_max_clients;
-	int m_amount_of_clients_currently= 0;
+	int m_current_amount_of_clients= 0;
 public:
 	//Simulator(string queue_structure, algorithm algo);
 	Simulator(int number_of_queues, int interval, algorithm algo);
@@ -35,7 +35,7 @@ public:
 	~Simulator();		// destructor
 	Simulator& initialize_array_cells(string queue_structure);
 
-	void routing_clients(char client);
+	bool routing_clients(char client);
 	bool are_all_queues_full();
 	void start_simulation(int run_time_length);
 

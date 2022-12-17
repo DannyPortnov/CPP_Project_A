@@ -1,6 +1,8 @@
 #include "Queue.h"
 #include "Simulator.h"
 
+#define run_length 10000
+//#define run_length 70
 
 void test1() { //works
 	Queue queue1(3);
@@ -57,11 +59,22 @@ void test4() { //works
 	sim2.initialize_array_cells(s);
 }
 
+void test5() { //testing start_simulation ^_^
+
+	Simulator s_shortest("q10_10", 1, shortest);
+	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
+
+	Simulator s_longest("q10_10", 1, longest);
+	s_longest.start_simulation(run_length);//works, for 70 we get ~65 max and ~5 left
+}
+
+
 int main() {
-	test1();
-	test2();
-	test3();
-	test4();
+	//test1();
+	//test2();
+	//test3();
+	//test4();
+	test5();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;

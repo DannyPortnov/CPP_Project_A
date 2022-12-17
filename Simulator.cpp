@@ -36,12 +36,12 @@ Simulator::~Simulator() {
 }
 
 //Route a client to a queue based on the algorithm chosen.
-//If all queues are full, the method exits.
-void Simulator::routing_clients(char client) {
+//returns whether the routing was succesfull (client added to queue) or not
+bool Simulator::routing_clients(char client) {
 	if (are_all_queues_full()) {
-		cout << "All queues are full, unable to add client to a queue" << endl;
-		m_clients_left++;
-		return;
+		/*cout << "All queues are full, unable to add client to a queue" << endl;*/
+		//m_clients_left++;
+		return false;
 	}
 	Queue* queue_to_route_client = m_simulator[0];
 	switch (m_algorithm)
@@ -60,8 +60,8 @@ void Simulator::routing_clients(char client) {
 	}
 	case longest:
 	{
-		int max = queue_to_route_client->size();
-		for (int i = 1; i < m_num_of_queues; i++)
+		int max = -1;
+		for (int i = 0; i < m_num_of_queues; i++)
 		{
 			if (m_simulator[i]->size() > max && !m_simulator[i]->is_queue_full()) {
 				queue_to_route_client = m_simulator[i];
@@ -95,14 +95,11 @@ void Simulator::routing_clients(char client) {
 	}
 	default:	// this is for when another algorithm is defined, and the function will not support it.
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
-		m_clients_left++;
-		break;
+		/*m_clients_left++;*/
+		return false;
 	}
 	queue_to_route_client->push(client);
-	m_amount_of_clients_currently++;
-	if (m_amount_of_clients_currently > m_max_clients) {
-		m_max_clients = m_amount_of_clients_currently;
-	}
+	return true;
 }
 //Checks whether all queues are full or not 
 bool Simulator::are_all_queues_full() {
@@ -119,17 +116,28 @@ void Simulator::start_simulation(int run_time_length) {
 	char client = 'A';//start pushing upper case
 	for (int i = 1; i <= run_time_length; i++)
 	{
+		/*m_current_amount_of_clients = 0;*/
 		for (int j = 0; j < m_num_of_queues; j++)
 		{
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
-				m_simulator[j]->pop();
-				m_clients_left++;
-				m_amount_of_clients_currently--;
+				if (m_simulator[j]->pop()) { //executes pop!
+					m_clients_left++;
+					m_current_amount_of_clients--;
+				}
 			}
+			//m_current_amount_of_clients += m_simulator[j]->size(); //sum all clients AFTER pop
 		}
 		if (i % m_interval == 0) { //push a client to a queue every interval time units
-			routing_clients(client);
+			if (routing_clients(client)) {
+				m_current_amount_of_clients++;
+			}
+			else {
+				m_clients_left++;
+			}
+		}
+		if (m_current_amount_of_clients > m_max_clients) { //if reached a new max, update
+			m_max_clients = m_current_amount_of_clients;
 		}
 		client++;
 		if (client == 'Z' + 1) { //start pushing lower case

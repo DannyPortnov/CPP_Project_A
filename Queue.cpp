@@ -68,10 +68,11 @@ int Queue::get_service_time() const {
 }
 
 //remove a client from the head of the queue
-void Queue::pop() {
+//returns whether the removal was succesful or not
+bool Queue::pop() {
 	if (is_queue_empty()) {
 		cout << "queue is empty, unable to pop client" << endl;
-		return;
+		return false;
 	}
 	*m_head = NULL; //remove client
 	increment_pointer(m_head);
@@ -79,6 +80,7 @@ void Queue::pop() {
 		m_head = nullptr;
 	}
 	m_variables_count--;
+	return true;
 }
 
 bool Queue::is_queue_full() const {
