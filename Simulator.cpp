@@ -1,20 +1,23 @@
 #include "Simulator.h"
 
 
+// Simulator constructor
 Simulator::Simulator(string queue_structure, int interval, algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)), 
 	m_q_capacity(extract_queues_capacity(queue_structure)),
 	m_interval(random_func(1,10)),
 	m_algorithm(algo)
 {
-	m_simulator = new Queue[m_num_of_queues];
-	Queue temp(m_q_capacity);
+	m_simulator = new Queue*[m_num_of_queues];
 	for (int i = 0; i < m_num_of_queues; i++) {
-		//m_simulator[i](&temp);
+		m_simulator[i] = new Queue(m_q_capacity);
 	}
-
 }
 
+//
+Simulator::~Simulator() {
+
+}
 
 
 

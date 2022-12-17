@@ -22,13 +22,13 @@ private:
 	const int m_num_of_queues; // number of queues in simulation
 	const int m_interval;
 	const algorithm m_algorithm;
-	Queue* m_simulator;		// simulator is an array of queue
+	Queue** m_simulator;		// simulator is an array of queues
 	//void extract_queues_capacity(string q_structure);
 	int m_start_simulation = 0;
 
 public:
 	Simulator(string queue_structure, int interval, algorithm algo);
-	~Simulator();		// deconstructor
+	~Simulator();		// destructor
 	bool start_simulation(int run_time_length);
 
 

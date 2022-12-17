@@ -42,16 +42,18 @@ void print_queue(Queue q) { //move inside the class after niv finishes with fron
 	//}
 }
 
-
-
-int main() {
-
-	test1();
-	test2();
+// test for extract functions
+void test3() {
 	string s = "q10_R1_19";
 	int queues_num = extract_queues_number(s);
 	int capacity = extract_queues_capacity(s);
 	cout << "queues num: " << queues_num << " capacity of queue is: " << capacity << endl;
+}
+
+int main() {
+	test1();
+	test2();
+	test3();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;
