@@ -83,6 +83,9 @@ void test6() { //writing to file
 	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
 	myfile << q_struct << "," << Simulator::get_algorithm_name(algo) << "," << interval << "," << s_shortest.get_clients_left() << "," << s_shortest.get_max_clients() << "\n";
 	myfile.close();
+
+	Simulator s_longest("q10_10", 1, longest);
+	s_longest.start_simulation(run_length);//works, for 70 we get ~65 max and ~5 left
 }
 
 

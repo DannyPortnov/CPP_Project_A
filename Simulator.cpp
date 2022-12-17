@@ -35,6 +35,20 @@ Simulator::~Simulator() {
 	delete[] m_simulator;
 }
 
+const string const Simulator::m_algorithm_to_string[] = {"shortest", "longest","fastest","random"};
+
+unsigned Simulator::get_max_clients() const {
+	return m_max_clients;
+}
+
+unsigned Simulator::get_clients_left() const {
+	return m_clients_left;
+}
+
+string Simulator::get_algorithm_name(algorithm algo) {
+	return m_algorithm_to_string[algo];
+}
+
 //Route a client to a queue based on the algorithm chosen.
 //returns whether the routing was succesfull (client added to queue) or not
 bool Simulator::routing_clients(char client) {
@@ -122,7 +136,7 @@ void Simulator::start_simulation(int run_time_length) {
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
 				if (m_simulator[j]->pop()) { //executes pop!
-					m_clients_left++;
+					/*m_clients_left++;*/
 					m_current_amount_of_clients--;
 				}
 			}
@@ -147,13 +161,6 @@ void Simulator::start_simulation(int run_time_length) {
 			client = 'A';
 		}
 	}
-	/*return true;*/
-	//if (m_start_simulation == run_time_length)
-	//	return false;
-	//else {
-	//	m_start_simulation++;
-	//	return true;
-	//}
 }
 
 // function that extracts the number of queues out of a string
