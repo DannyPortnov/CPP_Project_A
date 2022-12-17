@@ -18,7 +18,6 @@ friend int extract_queues_number(string q_structure);
 friend int extract_queues_capacity(string q_structure);
 
 private:
-	static const string const m_algorithm_to_string[number_of_algorithms];
 	const int m_num_of_queues; // number of queues in simulation
 	const int m_interval;
 	const algorithm m_algorithm;
@@ -27,6 +26,7 @@ private:
 	unsigned m_clients_left = 0;
 	unsigned m_max_clients;
 	unsigned m_current_amount_of_clients= 0;
+	static const string const m_algorithm_to_string[number_of_algorithms];
 public:
 	Simulator(int number_of_queues, int interval, algorithm algo);
 	Simulator(string queue_structure, int interval, algorithm algo);
