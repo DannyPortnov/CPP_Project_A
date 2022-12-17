@@ -21,7 +21,7 @@ using namespace std;
 
 
 class Queue {
-friend int random(int min, int max);
+friend int random_func(int min, int max);
 private:
 	//static random_device m_randomdevice;     // Only used once to initialise (seed) engine
 	static mt19937 m_gen;    // Random-number engine used (Mersenne-Twister in this case)
@@ -46,9 +46,6 @@ public:
 	bool is_queue_empty();
 	const char front();
 	int size();
-
-
-
 //	friend bool operator==(const Safe_Array& a, const Safe_Array& b);
 //	friend ostream& operator<<(ostream& os, const Safe_Array& a); //returns true if the arrays are identical, otherwise false.
 //private:
@@ -86,7 +83,7 @@ public:
 };
 
 
-int random(int min, int max);
+int random_func(int min, int max);
 
 //ostream& operator<<(ostream& os, const Safe_Array& arr);
 //bool operator==(const Safe_Array& a, const Safe_Array& b); //returns true if the arrays are identical, otherwise false.
