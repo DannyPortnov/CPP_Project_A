@@ -3,9 +3,9 @@
 //#define max_queue_size 19 //a queue cannot contain more than 19 clients
 
 // Simulator constructor
-Simulator::Simulator(string queue_structure, algorithm algo)
+Simulator::Simulator(string queue_structure, int interval, algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)),
-	m_interval(random_func(1,10)),
+	m_interval(interval),
 	m_algorithm(algo)
 {
 	m_simulator = new Queue*[m_num_of_queues];
@@ -15,7 +15,7 @@ Simulator::Simulator(string queue_structure, algorithm algo)
 Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
 	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
 {
-	m_simulator = new Queue * [m_num_of_queues];
+	m_simulator = new Queue*[m_num_of_queues];
 }
 // method that initialize the cells of the array of queues
 Simulator& Simulator::initialize_array_cells(string queue_structure) {
@@ -84,12 +84,20 @@ void Simulator::routing_clients(char client) {
 				min_service_time = queue_to_route_client->get_service_time();
 			}
 		}
-	default:
+		break;
+	case random:		// cilent joins a queue randomly.
+		bool q_is_full = true;
+		int random_queue;
+		while (q_is_full) {
+			random_queue = random_func(0, m_q_capacity - 1); //generate a random queue index and try routing a client to that queue
+			q_is_full = m_simulator[random_queue]->is_queue_full();
+		}
+		queue_to_route_client = m_simulator[random_queue];
+		break;
+	default:	// this is for when another algorithm is defined, and the function will not support it.
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
 		m_clients_left++;
 		break;
-
-
 	}
 	queue_to_route_client->push(client);
 }
