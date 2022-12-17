@@ -9,23 +9,30 @@ Simulator::Simulator(string queue_structure, algorithm algo)
 	m_algorithm(algo)
 {
 	m_simulator = new Queue*[m_num_of_queues];
-	construct_array_cells(queue_structure);
+	initialize_array_cells(queue_structure);
 }
-
-
+// Simulator constructor
 Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
 	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
 {
 	m_simulator = new Queue * [m_num_of_queues];
 }
-
-Simulator& Simulator::construct_array_cells(string queue_structure) {
+// method that initialize the cells of the array of queues
+Simulator& Simulator::initialize_array_cells(string queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
 		m_max_clients += m_q_capacity;
 	}
 	return *this;
+}
+
+// Simulator destructor
+Simulator::~Simulator() {
+	for (int i = 0; i < m_num_of_queues; i++) {
+		delete m_simulator[i];
+	}
+	delete[] m_simulator;
 }
 
 //Route a client to a queue based on the algorithm chosen.
@@ -59,6 +66,23 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
+
+	case longest:
+
+
+
+	case fastest:
+
+
+	case random:
+		bool q_is_full = true;
+		int random_queue;
+		while (q_is_full) {
+			random_queue = random_func(0, m_q_capacity - 1); //generate a random queue index and try routing a client to that queue
+			q_is_full = m_simulator[random_queue]->is_queue_full();
+			if (!m_simulator[random_queue]->is_queue_full())
+				queue_to_route_client->push(client);
+		}
 	case fastest: //client joins a queue with the minimum service time and that isn't full
 		int min_service_time = queue_to_route_client->get_service_time();
 		for (int i = 1; i < m_num_of_queues; i++)
@@ -72,6 +96,8 @@ void Simulator::routing_clients(char client) {
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
 		m_clients_left++;
 		break;
+
+
 	}
 	queue_to_route_client->push(client);
 }
@@ -86,14 +112,6 @@ bool Simulator::are_all_queues_full() {
 	return true;
 }
 
-
-// Simulator destructor
-Simulator::~Simulator() {
-	for (int i = 0; i < m_num_of_queues; i++) {
-		delete m_simulator[i];
-	}
-	delete[] m_simulator;
-}
 
 
 

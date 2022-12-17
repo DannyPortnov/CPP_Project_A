@@ -34,7 +34,7 @@ public:
 	void routing_clients(char client);
 	bool are_all_queues_full();
 	~Simulator();		// destructor
-	Simulator& construct_array_cells(string queue_structure);
+	Simulator& initialize_array_cells(string queue_structure);
 	bool start_simulation(int run_time_length);
 
 

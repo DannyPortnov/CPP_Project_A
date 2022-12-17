@@ -54,7 +54,7 @@ void test4() { //works
 	string s = "q10_10";
 	Simulator sim1(s,shortest);
 	Simulator sim2(10, 5, longest);
-	sim2.construct_array_cells(s);
+	sim2.initialize_array_cells(s);
 }
 
 int main() {
