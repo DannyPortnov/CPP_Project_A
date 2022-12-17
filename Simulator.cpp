@@ -66,14 +66,6 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
-
-	case longest:
-
-
-
-	case fastest:
-
-
 	case random:
 		bool q_is_full = true;
 		int random_queue;
