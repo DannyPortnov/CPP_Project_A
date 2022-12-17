@@ -9,39 +9,37 @@ Simulator::Simulator(string queue_structure, algorithm algo)
 	m_algorithm(algo)
 {
 	m_simulator = new Queue*[m_num_of_queues];
-	construct_array_cells(queue_structure);
+	initialize_array_cells(queue_structure);
 }
-
-
+// Simulator constructor
 Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
 	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
 {
 	m_simulator = new Queue * [m_num_of_queues];
 }
-
-Simulator& Simulator::construct_array_cells(string queue_structure) {
+// method that initialize the cells of the array of queues
+Simulator& Simulator::initialize_array_cells(string queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
 	}
 	return *this;
 }
-Simulator::Simulator(int number_of_queues, int interval, algorithm algo) 
-	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
-{
-	/*queues_array = new Queue[number_of_queues];
-	for (int i = 0; i < number_of_queues; i++)
-	{
 
-	}*/
+// Simulator destructor
+Simulator::~Simulator() {
+	for (int i = 0; i < m_num_of_queues; i++) {
+		delete m_simulator[i];
+	}
+	delete[] m_simulator;
 }
 
 void Simulator::routing_clients(char client) {
 
 	switch (m_algorithm)
 	{
+	Queue* queue_to_route_client = nullptr;
 	case shortest:
-		Queue* queue_to_route_client = nullptr;
 		int min = max_queue_size; //assume at least one queue
 		for (int i = 1; i < m_num_of_queues; i++)
 		{
@@ -52,8 +50,27 @@ void Simulator::routing_clients(char client) {
 		}
 		queue_to_route_client->push(client);
 		break;
+
+	case longest:
+
+
+
+	case fastest:
+
+
+	case random:
+		bool q_is_full = true;
+		int random_queue;
+		while (q_is_full) {
+			random_queue = random_func(0, m_q_capacity - 1); //generate a random queue index and try routing a client to that queue
+			q_is_full = m_simulator[random_queue]->is_queue_full();
+			if (!m_simulator[random_queue]->is_queue_full())
+				queue_to_route_client->push(client);
+		}
 	default:
 		break;
+
+
 	}
 }
 //Checks whether all queues are full or not 
@@ -67,14 +84,6 @@ bool Simulator::are_all_queues_full() {
 	return true;
 }
 
-
-// Simulator destructor
-Simulator::~Simulator() {
-	for (int i = 0; i < m_num_of_queues; i++) {
-		delete m_simulator[i];
-	}
-	delete[] m_simulator;
-}
 
 
 
