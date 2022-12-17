@@ -50,10 +50,18 @@ void test3() {
 	cout << "queues num: " << queues_num << " capacity of queue is: " << capacity << endl;
 }
 
+void test4() { //works
+	string s = "q10_10";
+	Simulator sim1(s,shortest);
+	Simulator sim2(10, 5, longest);
+	sim2.construct_array_cells(s);
+}
+
 int main() {
 	test1();
 	test2();
 	test3();
+	test4();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;
