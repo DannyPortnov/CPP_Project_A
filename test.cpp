@@ -6,6 +6,7 @@
 #define run_length 70
 
 #define results_file_name "results.csv"
+#define number_of_iterations_per_sim 10
 
 void test1() { //works
 	Queue queue1(3);
@@ -78,7 +79,22 @@ void test5() { //testing start_simulation ^_^
 
 }
 
-void algorithm_interval_gen(string s) {
+void algorithm_interval_avg(string q_struct, int interval, algorithm algo, ofstream& myfile)
+{
+	unsigned total_max_clients = 0, total_clients_left = 0;
+	for (int i = 1; i <= number_of_iterations_per_sim; i++) {
+		Simulator sim(q_struct, interval, shortest);
+		sim.start_simulation(run_length);
+		total_max_clients += sim.get_max_clients();
+		total_clients_left += sim.get_clients_left();
+	}
+	unsigned avg_max_clients = total_max_clients / number_of_iterations_per_sim;
+	unsigned avg_clients_left = total_clients_left / number_of_iterations_per_sim;
+	string m_algorithm_to_string[] = { "shortest", "longest","fastest","random" };
+	myfile << q_struct << "," << m_algorithm_to_string[(int)algo] << "," << interval << "," << avg_clients_left << "," << avg_max_clients << "\n";
+}
+
+void algorithm_interval_gen(const string& q_struct, ofstream& myfile) {
 	algorithm algo;
 	for (int a = 0; a < 4; a++) {
 		if (a == 0)
@@ -90,31 +106,36 @@ void algorithm_interval_gen(string s) {
 		else if (a == 3)
 			algo = random;
 		for (int interval = 1; interval <= 10; interval++) {
-			Simulator sim(s, interval, algo);
-			sim.start_simulation(run_length); 
+			algorithm_interval_avg(q_struct, interval, algo, myfile);
 		}
 	}
 }
 
-void test_bench() {
-	string queue_structure = "q10_10";
-	algorithm_interval_gen(queue_structure);
-	queue_structure = "q100_1";
-	algorithm_interval_gen(queue_structure);
-	queue_structure = "q10_R1_19";
-	algorithm_interval_gen(queue_structure);
+
+#define number_of_queue_structs 3
+void test_bench() { //works!
+	ofstream myfile;
+	myfile.open(results_file_name);
+	myfile << "q_struct,algorithm,interval,clients left,total max clients\n";
+	unsigned total_max_clients = 0, total_clients_left = 0;
+	string queue_structs[] = { "q10_10" ,"q100_1","q10_R1_19" };
+
+	for (int i = 0; i < number_of_queue_structs; i++)
+	{
+		algorithm_interval_gen(queue_structs[i], myfile);
+	}
+	myfile.close();
 }
 
 void test6() { //writing to file
 	ofstream myfile;
 	myfile.open(results_file_name);
-	myfile << "q_struct,algorithm,interval,clients left,total max clients\n";
 	string q_struct = "q10_10";
 	algorithm algo = shortest;
 	int interval = 1;
 	Simulator s_shortest(q_struct, interval, algo);
 	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
-	myfile << q_struct << "," << Simulator::get_algorithm_name(algo) << "," << interval << "," << s_shortest.get_clients_left() << "," << s_shortest.get_max_clients() << "\n";
+
 	myfile.close();
 }
 
@@ -125,8 +146,8 @@ int main() {
 	//test3();
 	//test4();
 	test_bench();
-	test5();
-	test6();
+	//test5();
+	//test6();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;

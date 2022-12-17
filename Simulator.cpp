@@ -35,8 +35,6 @@ Simulator::~Simulator() {
 	delete[] m_simulator;
 }
 
-const string const Simulator::m_algorithm_to_string[] = {"shortest", "longest","fastest","random"};
-
 unsigned Simulator::get_max_clients() const {
 	return m_max_clients;
 }
@@ -45,16 +43,10 @@ unsigned Simulator::get_clients_left() const {
 	return m_clients_left;
 }
 
-string Simulator::get_algorithm_name(algorithm algo) {
-	return m_algorithm_to_string[algo];
-}
-
 //Route a client to a queue based on the algorithm chosen.
 //returns whether the routing was succesfull (client added to queue) or not
 bool Simulator::routing_clients(char client) {
 	if (are_all_queues_full()) {
-		/*cout << "All queues are full, unable to add client to a queue" << endl;*/
-		//m_clients_left++;
 		return false;
 	}
 	Queue* queue_to_route_client = m_simulator[0];
@@ -109,7 +101,6 @@ bool Simulator::routing_clients(char client) {
 	}
 	default:	// this is for when another algorithm is defined, and the function will not support it.
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
-		/*m_clients_left++;*/
 		return false;
 	}
 	queue_to_route_client->push(client);
@@ -132,17 +123,14 @@ void Simulator::start_simulation(int run_time_length) {
 	char client = 'A';//start pushing upper case
 	for (int i = 1; i <= run_time_length; i++)
 	{
-		/*m_current_amount_of_clients = 0;*/
 		for (int j = 0; j < m_num_of_queues; j++)
 		{
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
 				if (m_simulator[j]->pop()) { //executes pop!
-					/*m_clients_left++;*/
 					m_current_amount_of_clients--;
 				}
 			}
-			//m_current_amount_of_clients += m_simulator[j]->size(); //sum all clients AFTER pop
 		}
 		if (i % m_interval == 0) { //push a client to a queue every interval time units
 			if (routing_clients(client)) {
