@@ -67,6 +67,7 @@ int Queue::get_service_time() const {
 	return m_service_time;
 }
 
+//remove a client from the head of the queue
 void Queue::pop() {
 	if (is_queue_empty()) {
 		cout << "queue is empty, unable to pop client" << endl;

@@ -52,7 +52,7 @@ void test3() {
 
 void test4() { //works
 	string s = "q10_10";
-	Simulator sim1(s,shortest);
+	//Simulator sim1(s,shortest); //check later
 	Simulator sim2(10, 5, longest);
 	sim2.initialize_array_cells(s);
 }

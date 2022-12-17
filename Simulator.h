@@ -26,7 +26,8 @@ private:
 	//void extract_queues_capacity(string q_structure);
 	int m_start_simulation = 0;
 	int m_clients_left = 0;
-	int m_max_clients = 0;
+	int m_max_clients;
+	int m_amount_of_clients_currently= 0;
 public:
 	//Simulator(string queue_structure, algorithm algo);
 	Simulator(int number_of_queues, int interval, algorithm algo);
@@ -36,7 +37,7 @@ public:
 
 	void routing_clients(char client);
 	bool are_all_queues_full();
-	bool start_simulation(int run_time_length);
+	void start_simulation(int run_time_length);
 
 
 };

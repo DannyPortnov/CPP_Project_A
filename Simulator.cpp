@@ -22,7 +22,7 @@ Simulator& Simulator::initialize_array_cells(string queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
-		m_max_clients += m_q_capacity;
+		//m_max_clients += m_q_capacity;
 	}
 	return *this;
 }
@@ -47,6 +47,7 @@ void Simulator::routing_clients(char client) {
 	switch (m_algorithm)
 	{
 	case shortest:
+	{
 		int min = queue_to_route_client->size();
 		for (int i = 1; i < m_num_of_queues; i++)
 		{
@@ -56,7 +57,9 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
+	}
 	case longest:
+	{
 		int max = queue_to_route_client->size();
 		for (int i = 1; i < m_num_of_queues; i++)
 		{
@@ -66,7 +69,9 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
+	}
 	case fastest: //client joins a queue with the minimum service time and that isn't full
+	{
 		int min_service_time = queue_to_route_client->get_service_time();
 		for (int i = 1; i < m_num_of_queues; i++)
 		{
@@ -76,7 +81,9 @@ void Simulator::routing_clients(char client) {
 			}
 		}
 		break;
+	}
 	case random:		// cilent joins a queue randomly.
+	{
 		bool q_is_full = true;
 		int random_queue;
 		while (q_is_full) {
@@ -85,12 +92,17 @@ void Simulator::routing_clients(char client) {
 		}
 		queue_to_route_client = m_simulator[random_queue];
 		break;
+	}
 	default:	// this is for when another algorithm is defined, and the function will not support it.
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
 		m_clients_left++;
 		break;
 	}
 	queue_to_route_client->push(client);
+	m_amount_of_clients_currently++;
+	if (m_amount_of_clients_currently > m_max_clients) {
+		m_max_clients = m_amount_of_clients_currently;
+	}
 }
 //Checks whether all queues are full or not 
 bool Simulator::are_all_queues_full() {
@@ -103,13 +115,37 @@ bool Simulator::are_all_queues_full() {
 	return true;
 }
 
-bool Simulator::start_simulation(int run_time_length) {
-	if (m_start_simulation == run_time_length)
-		return false;
-	else {
-		m_start_simulation++;
-		return true;
+void Simulator::start_simulation(int run_time_length) {
+	char client = 'A';//start pushing upper case
+	for (int i = 1; i <= run_time_length; i++)
+	{
+		for (int j = 0; j < m_num_of_queues; j++)
+		{
+			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
+			if (is_time_a_period_of_service_time) {
+				m_simulator[j]->pop();
+				m_clients_left++;
+				m_amount_of_clients_currently--;
+			}
+		}
+		if (i % m_interval == 0) { //push a client to a queue every interval time units
+			routing_clients(client);
+		}
+		client++;
+		if (client == 'Z' + 1) { //start pushing lower case
+			client = 'a';
+		}
+		if (client == 'z' + 1) {//start pushing upper case
+			client = 'A';
+		}
 	}
+	/*return true;*/
+	//if (m_start_simulation == run_time_length)
+	//	return false;
+	//else {
+	//	m_start_simulation++;
+	//	return true;
+	//}
 }
 
 // function that extracts the number of queues out of a string
