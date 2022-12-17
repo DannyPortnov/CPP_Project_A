@@ -1,8 +1,8 @@
 #include "Queue.h"
 #include "Simulator.h"
 
-#define run_length 10000
-//#define run_length 70
+//#define run_length 10000
+#define run_length 70
 
 void test1() { //works
 	Queue queue1(3);
@@ -61,11 +61,45 @@ void test4() { //works
 
 void test5() { //testing start_simulation ^_^
 
-	Simulator s_shortest("q10_10", 1, shortest);
-	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
+	//Simulator s_shortest("q10_10", 1, shortest);
+	//s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
 
-	Simulator s_longest("q10_10", 1, longest);
-	s_longest.start_simulation(run_length);//works, for 70 we get ~65 max and ~5 left
+	//Simulator s_longest("q10_10", 1, longest);
+	//s_longest.start_simulation(run_length);//works, for 70 we get ~65 max and ~5 left
+
+	//Simulator s_fastest("q10_10", 1, fastest);
+	//s_fastest.start_simulation(run_length); //works, for 70 we get ~64 max and ~6 left
+
+	Simulator s_random("q10_10", 1, random);
+	s_random.start_simulation(run_length); //works, for 70 we get ~60 max and ~10 left
+
+}
+
+void algorithm_interval_gen(string s) {
+	algorithm algo;
+	for (int a = 0; a < 4; a++) {
+		if (a == 0)
+			algo = shortest;
+		else if (a == 1)
+			algo = longest;
+		else if (a == 2)
+			algo = fastest;
+		else if (a == 3)
+			algo = random;
+		for (int interval = 1; interval <= 10; interval++) {
+			Simulator sim(s, interval, algo);
+			sim.start_simulation(run_length); 
+		}
+	}
+}
+
+void test_bench() {
+	string queue_structure = "q10_10";
+	algorithm_interval_gen(queue_structure);
+	queue_structure = "q100_1";
+	algorithm_interval_gen(queue_structure);
+	queue_structure = "q10_R1_19";
+	algorithm_interval_gen(queue_structure);
 }
 
 
@@ -74,7 +108,7 @@ int main() {
 	//test2();
 	//test3();
 	//test4();
-	test5();
+	test_bench();
 	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;

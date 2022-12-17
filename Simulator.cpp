@@ -72,8 +72,8 @@ bool Simulator::routing_clients(char client) {
 	}
 	case fastest: //client joins a queue with the minimum service time and that isn't full
 	{
-		int min_service_time = queue_to_route_client->get_service_time();
-		for (int i = 1; i < m_num_of_queues; i++)
+		int min_service_time = MAX_SERVICE_TIME + 1;
+		for (int i = 0; i < m_num_of_queues; i++)
 		{
 			if (m_simulator[i]->get_service_time() < min_service_time && !m_simulator[i]->is_queue_full()) {
 				queue_to_route_client = m_simulator[i];
@@ -87,7 +87,7 @@ bool Simulator::routing_clients(char client) {
 		bool q_is_full = true;
 		int random_queue;
 		while (q_is_full) {
-			random_queue = random_func(0, m_q_capacity - 1); //generate a random queue index and try routing a client to that queue
+			random_queue = random_func(0, m_num_of_queues - 1); //generate a random queue index and try routing a client to that queue
 			q_is_full = m_simulator[random_queue]->is_queue_full();
 		}
 		queue_to_route_client = m_simulator[random_queue];
@@ -101,6 +101,8 @@ bool Simulator::routing_clients(char client) {
 	queue_to_route_client->push(client);
 	return true;
 }
+
+
 //Checks whether all queues are full or not 
 bool Simulator::are_all_queues_full() {
 	for (int i = 1; i < m_num_of_queues; i++)
@@ -122,7 +124,7 @@ void Simulator::start_simulation(int run_time_length) {
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
 				if (m_simulator[j]->pop()) { //executes pop!
-					m_clients_left++;
+				//	m_clients_left++;
 					m_current_amount_of_clients--;
 				}
 			}
@@ -147,13 +149,6 @@ void Simulator::start_simulation(int run_time_length) {
 			client = 'A';
 		}
 	}
-	/*return true;*/
-	//if (m_start_simulation == run_time_length)
-	//	return false;
-	//else {
-	//	m_start_simulation++;
-	//	return true;
-	//}
 }
 
 // function that extracts the number of queues out of a string

@@ -16,20 +16,16 @@ friend int random_func(int min, int max);
 friend int extract_queues_number(string q_structure);
 friend int extract_queues_capacity(string q_structure);
 
-
 private:
 	const int m_num_of_queues; // number of queues in simulation
-	int m_q_capacity;
 	const int m_interval;
 	const algorithm m_algorithm;
 	Queue** m_simulator;		// simulator is an array of queues
-	//void extract_queues_capacity(string q_structure);
-	int m_start_simulation = 0;
+	int m_q_capacity;
 	int m_clients_left = 0;
-	int m_max_clients;
+	int m_max_clients = 0;
 	int m_current_amount_of_clients= 0;
 public:
-	//Simulator(string queue_structure, algorithm algo);
 	Simulator(int number_of_queues, int interval, algorithm algo);
 	Simulator(string queue_structure, int interval, algorithm algo);
 	~Simulator();		// destructor
@@ -39,12 +35,9 @@ public:
 	bool are_all_queues_full();
 	void start_simulation(int run_time_length);
 
-
 };
 
-
-//int extract_queues_number(string q_structure);
-//int extract_queues_capacity(string q_structure);
-
+int extract_queues_number(string q_structure);
+int extract_queues_capacity(string q_structure);
 
 #endif		// _SIMULATOR_H_
