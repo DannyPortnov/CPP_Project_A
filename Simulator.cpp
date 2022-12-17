@@ -2,21 +2,36 @@
 
 
 // Simulator constructor
-Simulator::Simulator(string queue_structure, int interval, algorithm algo)
+Simulator::Simulator(string queue_structure, algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)), 
-	m_q_capacity(extract_queues_capacity(queue_structure)),
 	m_interval(random_func(1,10)),
 	m_algorithm(algo)
 {
 	m_simulator = new Queue*[m_num_of_queues];
+	construct_array_cells(queue_structure);
+}
+
+
+Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
+	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
+{
+	m_simulator = new Queue * [m_num_of_queues];
+}
+
+Simulator& Simulator::construct_array_cells(string queue_structure) {
+	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
 	}
+	return *this;
 }
 
-//
+// Simulator destructor
 Simulator::~Simulator() {
-
+	for (int i = 0; i < m_num_of_queues; i++) {
+		delete m_simulator[i];
+	}
+	delete[] m_simulator;
 }
 
 
