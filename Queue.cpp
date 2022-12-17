@@ -46,7 +46,7 @@ void Queue::push(char new_client) {
 		m_variables_count++;
 	}
 	else {
-		cout << "queue is full, unable to push another client" << endl;
+	//	cout << "queue is full, unable to push another client" << endl;
 		return;
 	}
 	if (is_queue_empty()) {
@@ -71,7 +71,7 @@ int Queue::get_service_time() const {
 //returns whether the removal was succesful or not
 bool Queue::pop() {
 	if (is_queue_empty()) {
-		cout << "queue is empty, unable to pop client" << endl;
+//		cout << "queue is empty, unable to pop client" << endl;
 		return false;
 	}
 	*m_head = NULL; //remove client

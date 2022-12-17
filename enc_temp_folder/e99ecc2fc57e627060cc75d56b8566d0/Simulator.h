@@ -23,10 +23,17 @@ private:
 	const int m_interval;
 	const algorithm m_algorithm;
 	Queue** m_simulator;		// simulator is an array of queues
-	int m_q_capacity;
+<<<<<<< HEAD
+	//void extract_queues_capacity(string q_structure);
 	unsigned m_clients_left = 0;
 	unsigned m_max_clients;
 	unsigned m_current_amount_of_clients= 0;
+=======
+	int m_q_capacity;
+	int m_clients_left = 0;
+	int m_max_clients = 0;
+	int m_current_amount_of_clients= 0;
+>>>>>>> f09517c3fc3f8fe44ea01f7dc1968de0718a0137
 public:
 	Simulator(int number_of_queues, int interval, algorithm algo);
 	Simulator(string queue_structure, int interval, algorithm algo);
@@ -37,9 +44,12 @@ public:
 	bool are_all_queues_full();
 	void start_simulation(int run_time_length);
 
+<<<<<<< HEAD
 	unsigned get_max_clients() const;
 	unsigned get_clients_left() const;
 	static string get_algorithm_name(algorithm algo);
+=======
+>>>>>>> f09517c3fc3f8fe44ea01f7dc1968de0718a0137
 };
 
 int extract_queues_number(string q_structure);
