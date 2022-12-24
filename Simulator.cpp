@@ -128,7 +128,8 @@ void Simulator::start_simulation(int run_time_length) {
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
 				if (m_simulator[j]->pop()) { //executes pop!
-					m_current_amount_of_clients--;
+					if (m_current_amount_of_clients)
+						m_current_amount_of_clients--;
 				}
 			}
 		}

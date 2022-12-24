@@ -83,7 +83,7 @@ void algorithm_interval_avg(string q_struct, int interval, algorithm algo, ofstr
 {
 	unsigned total_max_clients = 0, total_clients_left = 0;
 	for (int i = 1; i <= number_of_iterations_per_sim; i++) {
-		Simulator sim(q_struct, interval, shortest);
+		Simulator sim(q_struct, interval, algo);
 		sim.start_simulation(run_length);
 		total_max_clients += sim.get_max_clients();
 		total_clients_left += sim.get_clients_left();
