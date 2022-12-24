@@ -121,6 +121,7 @@ bool Simulator::are_all_queues_full() {
 
 void Simulator::start_simulation(int run_time_length) {
 	char client = 'A';//start pushing upper case
+	int max_clients_allowed = m_num_of_queues * m_q_capacity;
 	for (int i = 1; i <= run_time_length; i++)
 	{
 		for (int j = 0; j < m_num_of_queues; j++)
@@ -142,7 +143,8 @@ void Simulator::start_simulation(int run_time_length) {
 			}
 		}
 		if (m_current_amount_of_clients > m_max_clients) { //if reached a new max, update
-			m_max_clients = m_current_amount_of_clients;
+			if(m_current_amount_of_clients<=max_clients_allowed+1)
+				m_max_clients = m_current_amount_of_clients;
 		}
 		client++;
 		if (client == 'Z' + 1) { //start pushing lower case
