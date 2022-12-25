@@ -14,7 +14,7 @@ Queue::Queue(int capacity)
 
 Queue::Queue(const Queue& d) 
 	: m_service_time(random_func(MIN_SERVICE_TIME, MAX_SERVICE_TIME))
-	, m_capacity(d.m_capacity)
+	, m_capacity(d.m_capacity) //todo: check constructor chaining
 {
 	initialize_queue();
 }
@@ -33,7 +33,7 @@ Queue::~Queue() {
 	delete[] m_queue;
 }
 
-void Queue::push(char new_client) {
+void Queue::push(const char new_client) {
 	if (!is_queue_full()) {
 		*m_tail = new_client;
 		increment_pointer(m_tail);
@@ -57,13 +57,13 @@ void Queue::increment_pointer(char*& pointer) {
 	}
 }
 
-int Queue::get_service_time() const {
+const int Queue::get_service_time() const {
 	return m_service_time;
 }
 
 //remove a client from the head of the queue
 //returns whether the removal was succesful or not
-bool Queue::pop() {
+const bool Queue::pop() {
 	if (is_queue_empty()) {
 //		cout << "queue is empty, unable to pop client" << endl;
 		return false;
@@ -77,31 +77,35 @@ bool Queue::pop() {
 	return true;
 }
 
-bool Queue::is_queue_full() const {
+const bool Queue::is_queue_full() const {
 	return m_tail == m_head;
 }
 
-bool Queue::is_queue_empty() const {
+const bool Queue::is_queue_empty() const {
 	return m_head == nullptr;
 }
 
 
 // function that returns the first variable in queue.
-const char Queue::front() {
+const char Queue::front() const {
 	if (m_head != nullptr)
 		return *m_head;
 	cout << "The Queue Is Empty!" << endl;
 }
 
 // function that returns the number of variables in queue
-int Queue::size() {
+const int Queue::size() const {
 	return m_variables_count;
 }
 
+mt19937& Queue::get_random_num_gen() {
+	return m_gen;
+}
+
 // random number initiallization function
-int random_func(int min, int max) { //consider moving this another class later
+const int random_func(const int min, const int max) { //consider moving this another class later
 	uniform_int_distribution<int> distr(min, max); // Guaranteed unbiased
-	int rand_num = distr(Queue::m_gen);
+	int rand_num = distr(Queue::get_random_num_gen());
 	return rand_num;
 }
 

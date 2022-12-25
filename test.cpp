@@ -22,7 +22,7 @@ void test1() { //works
 
 
 void test2() {
-	int size_check;
+	/*int size_check;*/
 	Queue queue1(10);
 	for (char i = 'a'; i < 'e'; i++)
 	{

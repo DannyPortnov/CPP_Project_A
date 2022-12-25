@@ -12,9 +12,9 @@ enum algorithm
 };
 
 class Simulator {
-friend int random_func(int min, int max);
-friend int extract_queues_number(string q_structure);
-friend int extract_queues_capacity(string q_structure);
+//friend int random_func(int min, int max);
+//friend int extract_queues_number(string q_structure);
+//friend int extract_queues_capacity(string q_structure);
 
 private:
 	const int m_num_of_queues; // number of queues in simulation
@@ -29,18 +29,18 @@ public:
 	Simulator(int number_of_queues, int interval, algorithm algo);
 	Simulator(string queue_structure, int interval, algorithm algo);
 	~Simulator();		// destructor
-	Simulator& initialize_array_cells(string queue_structure);
+	Simulator& initialize_array_cells(const string queue_structure);
 
-	bool routing_clients(char client);
-	bool are_all_queues_full();
-	void start_simulation(int run_time_length);
+	const bool routing_clients(const char client) const;
+	const bool are_all_queues_full() const;
+	void start_simulation(const int run_time_length);
 
-	unsigned get_max_clients() const;
-	unsigned get_clients_left() const;
+	const unsigned get_max_clients() const;
+	const unsigned get_clients_left() const;
 	static string get_algorithm_name(algorithm algo);
 };
 
-int extract_queues_number(string q_structure);
-int extract_queues_capacity(string q_structure);
+const int extract_queues_number(const string q_structure);
+const int extract_queues_capacity(const string q_structure);
 
 #endif		// _SIMULATOR_H_

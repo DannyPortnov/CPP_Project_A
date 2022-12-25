@@ -20,7 +20,7 @@ using namespace std;
 #endif  // _DEBUG
 
 class Queue {
-friend int random_func(int min, int max);
+//friend int random_func(int min, int max);
 private:
 	static mt19937 m_gen;    // Random-number engine used (Mersenne-Twister in this case)
 	char* m_queue;	//queue array pointer
@@ -32,20 +32,20 @@ private:
 	static unsigned queue_number; // number of class instances
 	Queue& initialize_queue();
 	void increment_pointer(char*& pointer); //ref to pointer
-
 public:
 	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
-	void push(char new_client); //plain char as of right now, consider support for const/&/* etc...
-	bool pop();
-	bool is_queue_full() const;
-	bool is_queue_empty() const;
-	const char front();
-	int size();
-	int get_service_time() const;
+	void push(const char new_client); //plain char as of right now, consider support for const/&/* etc...
+	const bool pop();
+	const bool is_queue_full() const;
+	const bool is_queue_empty() const;
+	const char front() const;
+	const int size() const;
+	const int get_service_time() const;
+	static mt19937& get_random_num_gen();
 };
 
-int random_func(int min, int max);
+const int random_func(const int min, const int max);
 
 #endif		// _QUEUE_H_

@@ -6,19 +6,19 @@
 Simulator::Simulator(string queue_structure, int interval, algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)),
 	m_interval(interval),
-	m_algorithm(algo)
+	m_algorithm(algo), m_max_clients(0), m_q_capacity(0)
 {
 	m_simulator = new Queue*[m_num_of_queues];
 	initialize_array_cells(queue_structure);
 }
 // Simulator constructor
 Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
-	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues)
+	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues), m_max_clients(0), m_q_capacity(0)
 {
 	m_simulator = new Queue*[m_num_of_queues];
 }
 // method that initialize the cells of the array of queues
-Simulator& Simulator::initialize_array_cells(string queue_structure) {
+Simulator& Simulator::initialize_array_cells(const string queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
@@ -35,17 +35,17 @@ Simulator::~Simulator() {
 	delete[] m_simulator;
 }
 
-unsigned Simulator::get_max_clients() const {
+const unsigned Simulator::get_max_clients() const {
 	return m_max_clients;
 }
 
-unsigned Simulator::get_clients_left() const {
+const unsigned Simulator::get_clients_left() const {
 	return m_clients_left;
 }
 
 //Route a client to a queue based on the algorithm chosen.
 //returns whether the routing was succesfull (client added to queue) or not
-bool Simulator::routing_clients(char client) {
+const bool Simulator::routing_clients(const char client) const {
 	if (are_all_queues_full()) {
 		return false;
 	}
@@ -109,7 +109,7 @@ bool Simulator::routing_clients(char client) {
 
 
 //Checks whether all queues are full or not 
-bool Simulator::are_all_queues_full() {
+const bool Simulator::are_all_queues_full() const {
 	for (int i = 1; i < m_num_of_queues; i++)
 	{
 		if (!m_simulator[i]->is_queue_full()) {
@@ -119,9 +119,9 @@ bool Simulator::are_all_queues_full() {
 	return true;
 }
 
-void Simulator::start_simulation(int run_time_length) {
+void Simulator::start_simulation(const int run_time_length) {
 	char client = 'A';//start pushing upper case
-	int max_clients_allowed = m_num_of_queues * m_q_capacity;
+	unsigned max_clients_allowed = m_num_of_queues * m_q_capacity;
 	for (int i = 1; i <= run_time_length; i++)
 	{
 		for (int j = 0; j < m_num_of_queues; j++)
@@ -157,8 +157,8 @@ void Simulator::start_simulation(int run_time_length) {
 }
 
 // function that extracts the number of queues out of a string
-int extract_queues_number(string q_structure) {
-	int string_size = q_structure.length();
+const int extract_queues_number(const string q_structure) {
+	int string_size = (int)q_structure.length();
 	int queues_number = 0;
 	bool is_q = false;
 	for (int i = 0; i < string_size; i++) {
@@ -175,8 +175,8 @@ int extract_queues_number(string q_structure) {
 }
 
 // function that extracts the capacity of the queues out of a string
-int extract_queues_capacity(string q_structure) {
-	int string_size = q_structure.length();
+const int extract_queues_capacity(const string q_structure) {
+	int string_size = (int)q_structure.length();
 	int count_underscore = 0;
 	bool is_random = false;		// used to check if we have random capacity or not.
 	int rand_min = 0;
