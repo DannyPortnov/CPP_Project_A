@@ -44,7 +44,13 @@ void Queue::push(const char new_client) {
 		return;
 	}
 	if (is_queue_empty()) {
-		m_head = &m_queue[0];
+		if (m_tail == &m_queue[0]) {
+			m_head = &m_queue[m_capacity - 1];
+		}
+		else {
+			m_head = (m_tail - 1);
+		}
+		//m_head = (m_tail-1);
 	}
 }
 
@@ -68,12 +74,20 @@ const bool Queue::pop() {
 //		cout << "queue is empty, unable to pop client" << endl;
 		return false;
 	}
+	if (m_variables_count==0) {
+		auto check = 0;
+	}
 	*m_head = NULL; //remove client
 	increment_pointer(m_head);
 	if (m_tail == m_head) {
 		m_head = nullptr;
 	}
-	m_variables_count--;
+	if (m_variables_count) {
+		m_variables_count--;
+	}
+	else {
+		auto check = 0;
+	}
 	return true;
 }
 

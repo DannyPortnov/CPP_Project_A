@@ -103,6 +103,9 @@ const bool Simulator::routing_clients(const char client) const {
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
 		return false;
 	}
+	if (m_num_of_queues * m_q_capacity < m_current_amount_of_clients) {
+		auto check = 0;
+	}
 	queue_to_route_client->push(client);
 	return true;
 }
@@ -131,20 +134,28 @@ void Simulator::start_simulation(const int run_time_length) {
 				if (m_simulator[j]->pop()) { //executes pop!
 					if (m_current_amount_of_clients)
 						m_current_amount_of_clients--;
+					else {
+						auto check = 0;
+					}
 				}
 			}
 		}
 		if (i % m_interval == 0) { //push a client to a queue every interval time units
 			if (routing_clients(client)) {
+				if (m_current_amount_of_clients == max_clients_allowed) {
+					auto check = m_current_amount_of_clients;
+				}
 				m_current_amount_of_clients++;
+				auto check_after = m_current_amount_of_clients;
 			}
 			else {
 				m_clients_left++;
 			}
 		}
 		if (m_current_amount_of_clients > m_max_clients) { //if reached a new max, update
-			if(m_current_amount_of_clients<=max_clients_allowed+1)
-				m_max_clients = m_current_amount_of_clients;
+			m_max_clients = m_current_amount_of_clients;
+			/*if (m_current_amount_of_clients <= max_clients_allowed + 1)
+				m_max_clients = m_current_amount_of_clients;*/
 		}
 		client++;
 		if (client == 'Z' + 1) { //start pushing lower case

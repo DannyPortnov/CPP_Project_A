@@ -98,9 +98,9 @@ void algorithm_interval_gen(const string& q_struct, ofstream& myfile) {
 	algorithm algo;
 	for (int a = 0; a < 4; a++) {
 		if (a == 0)
-			algo = shortest;
-		else if (a == 1)
 			algo = longest;
+		else if (a == 1)
+			algo = shortest;
 		else if (a == 2)
 			algo = fastest;
 		else if (a == 3)
