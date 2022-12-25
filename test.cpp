@@ -79,7 +79,19 @@ void test5() { //testing start_simulation ^_^
 
 }
 
-void algorithm_interval_avg(string q_struct, int interval, algorithm algo, ofstream& myfile)
+void test6() { //writing to file
+	ofstream myfile;
+	myfile.open(results_file_name);
+	string q_struct = "q10_10";
+	algorithm algo = shortest;
+	int interval = 1;
+	Simulator s_shortest(q_struct, interval, algo);
+	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
+
+	myfile.close();
+}
+
+void algorithm_interval_avg(const string& q_struct, int interval, algorithm algo, ofstream& myfile)
 {
 	unsigned total_max_clients = 0, total_clients_left = 0;
 	for (int i = 1; i <= number_of_iterations_per_sim; i++) {
@@ -126,17 +138,7 @@ void test_bench() { //works!
 	myfile.close();
 }
 
-void test6() { //writing to file
-	ofstream myfile;
-	myfile.open(results_file_name);
-	string q_struct = "q10_10";
-	algorithm algo = shortest;
-	int interval = 1;
-	Simulator s_shortest(q_struct, interval, algo);
-	s_shortest.start_simulation(run_length); //works, if 70 then 60 is max and 10 left
 
-	myfile.close();
-}
 
 
 int main() {
@@ -144,10 +146,10 @@ int main() {
 	//test2();
 	//test3();
 	//test4();
-	test_bench();
 	//test5();
 	//test6();
-	cout << "Leaks: " << _CrtDumpMemoryLeaks() << endl;
+	test_bench();
+	cout << "Memory Leaks: " << _CrtDumpMemoryLeaks() << endl;
 
 	return 0;
 }

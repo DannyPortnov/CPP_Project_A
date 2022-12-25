@@ -36,7 +36,7 @@ public:
 	Queue(int capacity);
 	Queue(const Queue&);
 	~Queue();		// deconstructor
-	void push(const char new_client); //plain char as of right now, consider support for const/&/* etc...
+	void push(const char new_client);
 	const bool pop();
 	const bool is_queue_full() const;
 	const bool is_queue_empty() const;

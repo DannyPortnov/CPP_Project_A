@@ -1,9 +1,7 @@
 #include "Simulator.h"
 
-//#define max_queue_size 19 //a queue cannot contain more than 19 clients
-
 // Simulator constructor
-Simulator::Simulator(string queue_structure, int interval, algorithm algo)
+Simulator::Simulator(const string& queue_structure, const int interval, const algorithm algo)
 	: m_num_of_queues(extract_queues_number(queue_structure)),
 	m_interval(interval),
 	m_algorithm(algo), m_max_clients(0), m_q_capacity(0)
@@ -12,13 +10,13 @@ Simulator::Simulator(string queue_structure, int interval, algorithm algo)
 	initialize_array_cells(queue_structure);
 }
 // Simulator constructor
-Simulator::Simulator(int number_of_queues, int interval, algorithm algo)
+Simulator::Simulator(const int number_of_queues, const int interval, const algorithm algo)
 	: m_algorithm(algo), m_interval(interval), m_num_of_queues(number_of_queues), m_max_clients(0), m_q_capacity(0)
 {
 	m_simulator = new Queue*[m_num_of_queues];
 }
 // method that initialize the cells of the array of queues
-Simulator& Simulator::initialize_array_cells(const string queue_structure) {
+Simulator& Simulator::initialize_array_cells(const string& queue_structure) {
 	m_q_capacity = extract_queues_capacity(queue_structure);
 	for (int i = 0; i < m_num_of_queues; i++) {
 		m_simulator[i] = new Queue(m_q_capacity);
@@ -34,11 +32,12 @@ Simulator::~Simulator() {
 	}
 	delete[] m_simulator;
 }
-
+//returns the highest amount of clients reached during the simulation (the sum of all clients in all queues)
 const unsigned Simulator::get_max_clients() const {
 	return m_max_clients;
 }
 
+//returns amount of clients left
 const unsigned Simulator::get_clients_left() const {
 	return m_clients_left;
 }
@@ -52,7 +51,7 @@ const bool Simulator::routing_clients(const char client) const {
 	Queue* queue_to_route_client = m_simulator[0];
 	switch (m_algorithm)
 	{
-	case shortest:
+	case shortest://client joins a queue with the least amount of clients and that isn't full
 	{
 		int min = queue_to_route_client->size();
 		for (int i = 1; i < m_num_of_queues; i++)
@@ -64,7 +63,7 @@ const bool Simulator::routing_clients(const char client) const {
 		}
 		break;
 	}
-	case longest:
+	case longest: //client joins a queue with the highest amount of clients and that isn't full
 	{
 		int max = -1;
 		for (int i = 0; i < m_num_of_queues; i++)
@@ -103,9 +102,6 @@ const bool Simulator::routing_clients(const char client) const {
 		cout << "algorithm  " << m_algorithm << " isn't currently supported by routing_clients method" << endl;
 		return false;
 	}
-	if (m_num_of_queues * m_q_capacity < m_current_amount_of_clients) {
-		auto check = 0;
-	}
 	queue_to_route_client->push(client);
 	return true;
 }
@@ -122,6 +118,7 @@ const bool Simulator::are_all_queues_full() const {
 	return true;
 }
 
+//runs the simulation: updates current amount of clients, and if possible routes a client to a queue according to the algorithm defined.
 void Simulator::start_simulation(const int run_time_length) {
 	char client = 'A';//start pushing upper case
 	unsigned max_clients_allowed = m_num_of_queues * m_q_capacity;
@@ -132,21 +129,13 @@ void Simulator::start_simulation(const int run_time_length) {
 			bool is_time_a_period_of_service_time = !(i % m_simulator[j]->get_service_time());
 			if (is_time_a_period_of_service_time) {
 				if (m_simulator[j]->pop()) { //executes pop!
-					if (m_current_amount_of_clients)
-						m_current_amount_of_clients--;
-					else {
-						auto check = 0;
-					}
+					m_current_amount_of_clients--;
 				}
 			}
 		}
 		if (i % m_interval == 0) { //push a client to a queue every interval time units
 			if (routing_clients(client)) {
-				if (m_current_amount_of_clients == max_clients_allowed) {
-					auto check = m_current_amount_of_clients;
-				}
 				m_current_amount_of_clients++;
-				auto check_after = m_current_amount_of_clients;
 			}
 			else {
 				m_clients_left++;
@@ -154,8 +143,6 @@ void Simulator::start_simulation(const int run_time_length) {
 		}
 		if (m_current_amount_of_clients > m_max_clients) { //if reached a new max, update
 			m_max_clients = m_current_amount_of_clients;
-			/*if (m_current_amount_of_clients <= max_clients_allowed + 1)
-				m_max_clients = m_current_amount_of_clients;*/
 		}
 		client++;
 		if (client == 'Z' + 1) { //start pushing lower case
