@@ -20,7 +20,6 @@ using namespace std;
 #endif  // _DEBUG
 
 class Queue {
-//friend int random_func(int min, int max);
 private:
 	static mt19937 m_gen;    // Random-number engine used (Mersenne-Twister in this case)
 	char* m_queue;	//queue array pointer

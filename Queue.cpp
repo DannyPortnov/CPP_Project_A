@@ -70,7 +70,6 @@ const int Queue::get_service_time() const {
 //returns whether the removal was succesful or not
 const bool Queue::pop() {
 	if (is_queue_empty()) {
-//		cout << "queue is empty, unable to pop client" << endl;
 		return false;
 	}
 	*m_head = NULL; //remove client
